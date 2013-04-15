@@ -1,0 +1,26 @@
+#!/bin/bash
+echo The current directory:
+tail=${PWD##*/}
+echo $tail
+
+read -p "Enter your username (or UID): " user
+grep $user /etc/passwd > /dev/null 2>&1
+
+while [ "$?" -eq 1 ]; do
+echo "Error: this username (or UID) is not found."
+read -p "Enter your username again: " user
+grep $user /etc/passwd > /dev/null 2>&1 
+done
+
+if [ "$?" -eq 0 ]; then
+echo "User found"
+fi
+
+read -p "Enter directory name: " name
+echo "In this directory regular files are " 
+find ${name} -type f | wc -l
+  
+exit
+
+
+   
